@@ -2,6 +2,7 @@
 namespace Ratchet\Client;
 use Evenement\EventEmitterTrait;
 use Evenement\EventEmitterInterface;
+use Ratchet\RFC6455\Handshake\PermessageDeflateOptions;
 use React\Socket\ConnectionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -100,7 +101,7 @@ class WebSocket implements EventEmitterInterface {
             false,
             function() use ($reusableUAException) {
                 return $reusableUAException;
-            }
+            },function(){}, PermessageDeflateOptions::createDefault()
         );
 
         $stream->on('data', [$streamer, 'onData']);
